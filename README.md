@@ -20,15 +20,21 @@ $ java -Djava.library.path=src/main/cpp/ -jar target/benchmarks.jar -wi 5 -i 10 
 Throughput (the higher the better):
 ```
 Benchmark                   Mode  Cnt    Score    Error   Units
-JniBenchmark.baseline      thrpt   40  148.235 ±  2.301  ops/us
-JniBenchmark.createCached  thrpt   40    4.236 ±  0.021  ops/us
-JniBenchmark.createSimple  thrpt   40    1.497 ±  0.011  ops/us
+JniBenchmark.baseline                    thrpt   50  153.299 ± 1.264  ops/us
+JniBenchmark.createEntryCached           thrpt   50    4.247 ± 0.024  ops/us
+JniBenchmark.createEntrySimple           thrpt   50    1.527 ± 0.012  ops/us
+JniBenchmark.createObjectCached          thrpt   50    4.839 ± 0.016  ops/us
+JniBenchmark.getArgumentsFromNativeCode  thrpt   50   57.672 ± 0.241  ops/us
+
 ```
 
 Average time per operation (the lower the better):
 ```
 Benchmark                   Mode  Cnt    Score    Error   Units
-JniBenchmark.baseline       avgt   40    0.007 ±  0.001   us/op
-JniBenchmark.createCached   avgt   40    0.244 ±  0.010   us/op
-JniBenchmark.createSimple   avgt   40    0.668 ±  0.007   us/op
+JniBenchmark.baseline                     avgt   50    0.008 ± 0.002   us/op
+JniBenchmark.createEntryCached            avgt   50    0.235 ± 0.001   us/op
+JniBenchmark.createEntrySimple            avgt   50    0.671 ± 0.024   us/op
+JniBenchmark.createObjectCached           avgt   50    0.207 ± 0.001   us/op
+JniBenchmark.getArgumentsFromNativeCode   avgt   50    0.018 ± 0.001   us/op
+
 ```
