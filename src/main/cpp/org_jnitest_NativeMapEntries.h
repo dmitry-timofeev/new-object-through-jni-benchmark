@@ -9,6 +9,22 @@ extern "C" {
 #endif
 /*
  * Class:     org_jnitest_NativeMapEntries
+ * Method:    getKey
+ * Signature: (I)I
+ */
+JNIEXPORT jint JNICALL Java_org_jnitest_NativeMapEntries_getKey
+  (JNIEnv *, jclass, jint);
+
+/*
+ * Class:     org_jnitest_NativeMapEntries
+ * Method:    getValue
+ * Signature: (D)D
+ */
+JNIEXPORT jdouble JNICALL Java_org_jnitest_NativeMapEntries_getValue
+  (JNIEnv *, jclass, jdouble);
+
+/*
+ * Class:     org_jnitest_NativeMapEntries
  * Method:    createEntrySimple
  * Signature: (ID)Lorg/jnitest/MapEntry;
  */
@@ -17,10 +33,18 @@ JNIEXPORT jobject JNICALL Java_org_jnitest_NativeMapEntries_createEntrySimple
 
 /*
  * Class:     org_jnitest_NativeMapEntries
- * Method:    initCreateEntry
+ * Method:    initCreateObjects
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_org_jnitest_NativeMapEntries_initCreateEntry
+JNIEXPORT void JNICALL Java_org_jnitest_NativeMapEntries_initCreateObjects
+  (JNIEnv *, jclass);
+
+/*
+ * Class:     org_jnitest_NativeMapEntries
+ * Method:    createObjectCached
+ * Signature: ()Ljava/lang/Object;
+ */
+JNIEXPORT jobject JNICALL Java_org_jnitest_NativeMapEntries_createObjectCached
   (JNIEnv *, jclass);
 
 /*
@@ -33,10 +57,10 @@ JNIEXPORT jobject JNICALL Java_org_jnitest_NativeMapEntries_createEntryCached
 
 /*
  * Class:     org_jnitest_NativeMapEntries
- * Method:    teardownCreateEntry
+ * Method:    teardownCreateObjects
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_org_jnitest_NativeMapEntries_teardownCreateEntry
+JNIEXPORT void JNICALL Java_org_jnitest_NativeMapEntries_teardownCreateObjects
   (JNIEnv *, jclass);
 
 #ifdef __cplusplus

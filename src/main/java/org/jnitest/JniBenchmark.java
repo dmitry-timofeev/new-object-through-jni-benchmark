@@ -43,7 +43,16 @@ import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
 
 /**
- * A benchmark of various approaches to repeatedly creating Java objects from native code.
+ * A benchmark of various approaches to repeatedly creating Java objects from native code:
+ * <ul>
+ *   <li>baseline #1: Create a MapEntry in Java</li>
+ *   <li>baseline #2: Create an Object from native code,
+ *       using a global reference to its class object.</li>
+ *   <li>Create a MapEntry in Java, but get the constructor arguments from native code</li>
+ *   <li>Create a MapEntry in native code, look up the class object
+ *       and the constructor id each time.</li>
+ *   <li>Create a MapEntry in native code, using a global reference to its class object.</li>
+ * </ul>
  */
 @State(Scope.Thread)
 @BenchmarkMode({Mode.Throughput, Mode.AverageTime})
@@ -60,12 +69,12 @@ public class JniBenchmark {
 
   @Setup(Level.Iteration)
   public void lookupConstructor() {
-    NativeMapEntries.initCreateEntry();
+    NativeMapEntries.initCreateObjects();
   }
 
   @TearDown(Level.Iteration)
   public void destoryConstructorReference() {
-    NativeMapEntries.teardownCreateEntry();
+    NativeMapEntries.teardownCreateObjects();
   }
 
   @Benchmark
@@ -74,7 +83,13 @@ public class JniBenchmark {
   }
 
   @Benchmark
-  public MapEntry createSimple() {
+  public MapEntry createEntryArgumentsFromNativeCode() {
+    return new MapEntry(NativeMapEntries.getKey(key),
+        NativeMapEntries.getValue(value));
+  }
+
+  @Benchmark
+  public MapEntry createEntrySimple() {
     MapEntry e = NativeMapEntries.createEntrySimple(key, value);
 
     assert e.key == key;
@@ -83,7 +98,15 @@ public class JniBenchmark {
   }
 
   @Benchmark
-  public MapEntry createCached() {
+  public Object createObjectCached() {
+    Object o = NativeMapEntries.createObjectCached();
+    assert o != null;
+
+    return o;
+  }
+
+  @Benchmark
+  public MapEntry createEntryCached() {
     MapEntry e = NativeMapEntries.createEntryCached(key, value);
 
     assert e.key == key;
